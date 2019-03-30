@@ -1,0 +1,29 @@
+html{
+    background: #ffffe6;
+}
+
+.find{
+    text-align: center;
+    margin: 10%;
+}
+
+.int{
+    align-content: center;
+}
+
+.example{
+    margin: 7%;
+}
+
+#one{
+    margin: 5px;
+}
+
+.detail{
+    margin: 7%;
+}
+
+.detail td{
+    padding: 50px;
+}
+
