@@ -44,5 +44,4 @@ train_feats, test_feats = split_label_feats(lfeats, split=0.75)
 
 nb_classifier = NaiveBayesClassifier.train(train_feats)
 #print(nltk.classify.accuracy(nb_classifier, test_feats))
-#nb_classifier.show_most_informative_features(10)
 pickle.dump(nb_classifier,open("nb_class.pkl","wb"))

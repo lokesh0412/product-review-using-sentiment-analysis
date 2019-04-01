@@ -6,7 +6,12 @@ import nltk
 from nltk.metrics import ConfusionMatrix
 import pandas as pd
 import matplotlib.pyplot as plt
+from nltk.tokenize import word_tokenize
 import numpy as np
+from nltk.probability import FreqDist
+import matplotlib.pyplot as plt; plt.rcdefaults()
+from readData import classifyUsingRating
+
 
 nb_classifier=pickle.load(open("nb_class.pkl","rb"))
 def performanceEvaluation():
@@ -56,7 +61,82 @@ def performanceEvaluation():
         height = rect.get_height()
         ax.text(rect.get_x() + rect.get_width() / 2, height + 1, label,
             ha='center', va='bottom')
-    plt.savefig('performace.png')
+    plt.savefig('static/performace.png')
+    plt.close()
     return 1
 
+
+def makeFreqDistOfGivenProduct(file):
+    filename="files\\"+file+".csv" 
+    df=pd.read_csv(filename)
+    data = df.to_dict()
+    content = []
+    content = word_tokenize(data['content'][1])
+    for i in range(2,len(data['content'])):
+        c = word_tokenize((data['content'][i]))
+        c = [item for item in c if len(item) >=2]
+        content.extend(c)
+   # normalising words
+    content = [ word.lower() for word in content ]
+    content = [word for word in content if word.isalpha()]
+    from nltk.corpus import stopwords
+    stop_words = set(stopwords.words('english'))
+    words = [w for w in content if not w in stop_words]
+    from nltk.stem.porter import PorterStemmer
+    porter = PorterStemmer()
+    stemmed = [porter.stem(word) for word in words]
+    fig = plt.figure()
+    fdist = FreqDist(stemmed)
+    fdist.plot(20,cumulative=False)
+    fig.savefig('static/freqdistofproduct.png')
+    fig.clear()
+    return 1
+
+    
 #def makePieChart(data,labels):
+def getRatingCount(file):
+    count1=0
+    filename = "files\\"+file+".csv"
+    df=pd.read_csv(filename)
+    data = df.to_dict('records')
+    count2=0
+    count3=0
+    count4=0
+    count5=0
+    for i in range(len(data)):
+        if(str(data[i]['rating']).split(" ")[0]=='1.0'):
+            count1=count1+1
+        elif(str(data[i]['rating']).split(" ")[0]=='2.0'):
+            count2=count2+1
+        elif(str(data[i]['rating']).split(" ")[0]=='3.0'):
+            count3=count3+1
+        elif(str(data[i]['rating']).split(" ")[0]=='4.0'):
+            count4=count4+1
+        else:
+            count5=count5+1
+
+    fig = plt.figure()
+    objects = ('One Star','Two Start','Three Star','Four Star','Five Star')
+    y_pos = np.arange(len(objects))
+    performance = [count1,count2,count3,count4,count5]
+    plt.barh(y_pos, performance, align='center', alpha=0.5)
+    plt.yticks(y_pos, objects)
+    plt.xlabel('Count')
+    plt.title('Rating count goiven by users for searched product')
+    fig.savefig('static/rating.png')
+    return 1
+
+def comparision(positive,negative,product):
+    d = classifyUsingRating(product)
+    type(classifyUsingRating(product))
+    fig = plt.figure()
+    objects = ('PosRat','PosCls','NegRat','NegCls')
+    y_pos = np.arange(len(objects))
+    performance = [d[0],positive,d[1],negative]
+    plt.barh(y_pos, performance, align='center', alpha=0.5)
+    plt.yticks(y_pos, objects)
+    plt.xlabel('Count')
+    plt.title('Comparison between rating and prediction by model')
+    fig.savefig('static/comparision.png')
+    return 1
+    

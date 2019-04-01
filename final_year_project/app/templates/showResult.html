@@ -2,7 +2,7 @@
 <html>
    <head>
       <title>Result</title>
-      <script type = "text/javascript" src = "static/js/loader.js">
+      <script type = "text/javascript" src = "/static/loader.js">
       </script>
       <script type = "text/javascript">
          google.charts.load('current', {packages: ['corechart']});
@@ -53,10 +53,28 @@
      background-color: "silver";
    }
       </style>
+       <script>
+       $('#summary').click(function(){
+
+ $.ajax({
+      type:'get',
+      url:'http://127.0.0.1:5000//summary',
+      cache:false,
+      data:false,
+      async:asynchronous,
+      dataType:json, //if you want json
+      success: function(data) {
+      },
+      error: function(request, status, error) {
+        
+      }
+   });
+});</script>
    </head>
    <body>
      <h1>Sentiment Analysis Result</h1>
      <div id = "data" style = "width: 450px; height: 200px; margin: 0 auto">
+         
      <div style="width:100%">
          <table>
            <tr>
@@ -78,6 +96,6 @@
            {% endfor %}
          </table>
        </div>
-       <button class="btn btn-primary">Graphs</button>
+       <input type="button" id="summary" value="Summary">
      </body>
 </html>

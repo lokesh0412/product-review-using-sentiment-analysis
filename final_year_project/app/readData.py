@@ -1,43 +1,22 @@
-import pandas
-import matplotlib.pyplot as plt
 from nltk.tokenize import word_tokenize
 import numpy as np
 from nltk.probability import FreqDist
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+import pandas as pd
+import matplotlib.pyplot as plt
 
-def classifyUsingRating(filename):
-    count1=0
-    df=pandas.read_csv(filename)
-    data = df.to_dict('records')
-    count2=0
-    count3=0
-    count4=0
-    count5=0
-    for i in range(len(data)):
-        if(data[i]['rating'].split(" ")[0]=='1.0'):
-            count1=count1+1
-        elif(data[i]['rating'].split(" ")[0]=='2.0'):
-            count2=count2+1
-        elif(data[i]['rating'].split(" ")[0]=='3.0'):
-            count3=count3+1
-        elif(data[i]['rating'].split(" ")[0]=='4.0'):
-            count4=count4+1
-        else:
-            count5=count5+1
-    positive=count3+count4+count5
-    negative=len(data)-positive
-    print(positive,negative)
 
 def preprocessing(file):
     filename="files\\"+file+".csv"
-    df=pandas.read_csv(filename)
+    df=pd.read_csv(filename)
     data = df.to_dict()
     content = []
     porter = PorterStemmer()
     stop_words = set(stopwords.words('english'))
     for i in range(0,len(data['content'])):
-        c = word_tokenize((data['content'][i]))
+        c = word_tokenize((str(data['content'][i])))
+       # c = str(data['content'][i]).split(" ")
         c = [item for item in c if len(item) >=2]
    # normalising words
         c = [ word.lower() for word in c ]
@@ -64,7 +43,7 @@ def preprocessForTraining(words):
 #function for getting random unclassified comments
 def getUnprocessedData(file,classes):
     filename="files\\"+file+".csv"
-    df=pandas.read_csv(filename)
+    df=pd.read_csv(filename)
     data = df.to_dict('records')
     result = []
     for i in range(20):
@@ -108,13 +87,28 @@ def calculateSentimentScore(data):
     result.append(negativeCount)
     return result
 
-
-def getData(productName):
-    url = "files/final_project_"+productName+".txt";
-    data = pd.read_csv(url,delimiter=",",header=None)
-    dataForClassification=[];
-    for i in range(6):
-        a = data[i][4]
-        b = { 'review':a}
-        dataForClassification.append(b)
-    return dataForClassification
+        
+def classifyUsingRating(file):
+    count1=0
+    filename = "files\\"+file+".csv"
+    df=pd.read_csv(filename)
+    data = df.to_dict('records')
+    count2=0
+    count3=0
+    count4=0
+    count5=0
+    for i in range(len(data)):
+        if(str(data[i]['rating']).split(" ")[0]=='1.0'):
+            count1=count1+1
+        elif(str(data[i]['rating']).split(" ")[0]=='2.0'):
+            count2=count2+1
+        elif(str(data[i]['rating']).split(" ")[0]=='3.0'):
+            count3=count3+1
+        elif(str(data[i]['rating']).split(" ")[0]=='4.0'):
+            count4=count4+1
+        else:
+            count5=count5+1
+    positive=count3+count4+count5
+    negative=len(data)-positive
+    result = [positive,negative]
+    return result

@@ -1,54 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>swiper slider</title>
-    <link rel="stylesheet" href="static/css/swiper.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.6/js/swiper.min.js"></script>
+    <link rel="stylesheet" href="/static/swiper.min.css">
+    <link rel="stylesheet" href="/static/swiper.css">
+    
 </head>
 <body>
-
+   
    <h1>The Sentiment Analysis</h1>
-
+    
     <!-- Swiper -->
   <div class="swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide">
           <div class="imgBx">
-              <img src="images/img1.jpeg" alt="">
+              <img src="/static/performace.png" alt="">
           </div>
           <div class="details">
               <h3>Result 1 <br> <span>Web Designer</span></h3>
           </div>
       </div>
-
+      
       <div class="swiper-slide">
           <div class="imgBx">
-              <img src="images/img2.jpeg" alt="">
+              <img src="/static/summary.png" alt="">
           </div>
           <div class="details">
               <h3>Result 2 <br> <span>Web Designer</span></h3>
           </div>
       </div>
-
+      
       <div class="swiper-slide">
           <div class="imgBx">
-              <img src="images/img3.jpeg" alt="">
+              <img src="/static/img3.png" alt="">
           </div>
           <div class="details">
               <h3>Result 3 <br> <span>Web Designer</span></h3>
           </div>
       </div>
+      
+      <div class="swiper-slide">
+          <div class="imgBx">
+              <img src="/static/img4.png" alt="">
+          </div>
+          <div class="details">
+              <h3>Result 4 <br> <span>Web Designer</span></h3>
+          </div>
+      </div>
+      
+      <div class="swiper-slide">
+          <div class="imgBx">
+              <img src="/static/img5.png" alt="">
+          </div>
+          <div class="details">
+              <h3>Result 5 <br> <span>Web Designer</span></h3>
+          </div>
+      </div>
+
     </div>
     <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
   </div>
-
-    <script type="text/javascript" src="swiper.min.js"></script>
-
+    
+    <script type="text/javascript" src="/static/swiper.min.js"></script>
+    
     <script>
     var swiper = new Swiper('.swiper-container', {
       effect: 'coverflow',
@@ -56,10 +75,10 @@
       centeredSlides: true,
       slidesPerView: 'auto',
       coverflowEffect: {
-        rotate: 30,
+        rotate: 60,
         stretch: 0,
-        depth: 500,
-        modifier: 5,
+        depth: 700,
+        modifier: 1,
         slideShadows : true,
       },
       pagination: {
@@ -67,6 +86,6 @@
       },
     });
   </script>
-
+    
 </body>
 </html>
