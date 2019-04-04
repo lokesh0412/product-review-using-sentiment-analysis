@@ -2,7 +2,7 @@ from flask import Flask,render_template,request
 from readData import preprocessing,getUnprocessedData
 import requests,json
 import pandas as pd
-from readData import calculateSentimentScore
+from readData import calculateSentimentScore,writeOutputToFile
 import matplotlib.pyplot as plt
 from flask import Flask, session, redirect, url_for, escape, request
 import pickle
@@ -33,6 +33,8 @@ def getDataToClassify():
     data=json.dumps({'rev':reviews})
     r = requests.post(url,data)
     classes = r.json()['results']
+#writing classes to file
+    writeOutputToFile(classes,product)
 #adding calculated classes to session    
     session['classes']=classes
     session['product']=product

@@ -112,3 +112,11 @@ def classifyUsingRating(file):
     negative=len(data)-positive
     result = [positive,negative]
     return result
+
+def writeOutputToFile(result,product):
+    file = open('output.txt','w')
+    file.write('class labels for'+product)
+    for i in range(len(result)):
+        file.write(result[i]['class'])
+        file.write('\n')
+    file.close() 
